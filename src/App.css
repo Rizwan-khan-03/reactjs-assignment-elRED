@@ -5,6 +5,11 @@
 .logo_img{
   width: 40px;
 }
+.profile_img{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
 .d-flex{
   display: flex;
   justify-content: space-between;
@@ -153,4 +158,44 @@ label[for="resumeUpload"]:hover {
   border: none;
   border-radius: 4px;
   margin:  7px; 
+}
+.pdf-container {
+  width: 100%;
+  max-width: 800px; 
+  margin: 0 auto; 
+}
+.modal-90w {
+  max-width: 90%;
+}
+
+.modal-body {
+  max-height: calc(100vh - 200px); 
+  overflow-y: auto;
+}
+.user-info.ml-3 {
+  padding-left: 10px;
+}
+
+.custom-card {
+  background-color: rgba(211, 211, 211, 0.6); 
+  padding: 10px;
+  border-radius: 8px; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+}
+
+.custom-card:hover {
+  background-color: rgba(211, 211, 211, 0.9); 
+  transition: background-color 0.3s ease-in-out;
+}
+.custom-card-outer {
+  background-color: rgba(211, 211, 211, 0.8); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+}
+
+.custom-card:hover {
+  background-color: rgba(211, 211, 211, 1);
+  transition: background-color 0.3s ease-in-out;
+}
+.modal-open{
+  cursor: pointer;
 }
