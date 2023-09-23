@@ -14,6 +14,7 @@ function BioScreen() {
     const [selectedFile, setSelectedFile] = useState(null);
     const [skills, setSkill] = useState([])
     const [hobbies, setHobbies] = useState([]);
+    const [subject, setSubject] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [showModalCode, setShowModalCode] = useState(false);
     const [meetUp, setMeetUp] = useState([]);
@@ -32,6 +33,7 @@ function BioScreen() {
             if (storedskillData) {
                 setSkill(skilldata.selectedSkill || []);
                 setHobbies(skilldata.selectedHobbies || []);
+                setSubject(skilldata.selectedSubject || []);
             }
         }
 
@@ -75,7 +77,7 @@ function BioScreen() {
             <Container>
                 <Row className="d-flex justify-content-center align-items-center">
                     <Col xs={12} sm={12} md={6} lg={4} className="text-center align-items-end">
-                        <Card className="p-4 shadow" style={{ maxWidth: '100%', height: '100vh', position: 'relative' }}>
+                        <Card className="p-4 shadow" style={{ maxWidth: '100%', height: '100%', position: 'relative' }}>
                             <Row className="d-flex justify-content-center align-items-center">
                                 <Col className="text-center align-items-end">
                                     <div className="d-flex">
@@ -150,6 +152,27 @@ function BioScreen() {
                                         ))
                                     ) : (
                                         <p>No hobbies added yet</p>
+                                    )}
+
+                                </Col>
+                            </Row>
+                            <Row className="d-flex justify-content-center align-items-center">
+                                <Col className="text-center align-items-end">
+                                    <div className="d-flex">
+                                        <span>My favourite subject</span>
+                                        <Link to='/skills'><MdModeEditOutline /></Link>
+                                    </div>
+                                    {subject ? (
+                                        subject.map((sub) => (
+                                            <span
+                                                key={sub?._id}
+                                                className="custom-button-span"
+                                            >
+                                                {sub?.label}  
+                                            </span>
+                                        ))
+                                    ) : (
+                                        <p>No subject added yet</p>
                                     )}
 
                                 </Col>

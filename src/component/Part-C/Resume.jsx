@@ -13,12 +13,12 @@ const Resume = ({ pdfUrl }) => {
 
     return (
         <div className="pdf-container">
-            <Document file={pdfUrl} onLoadSuccess={onDocumentLoadSuccess}>
+            <Document file={'https://docs.google.com/presentation/d/1D0hlnM0-LNPaIj9kAdUIJaXcs5cpAE0VRaPNseKBNgU/edit#slide=id.g22ef6b3e012_0_18'} onLoadSuccess={onDocumentLoadSuccess}>
                 {Array.from({ length: numPages }, (_, index) => (
                     <Page
                         key={`page_${index + 1}`}
                         pageNumber={index + 1}
-                        width={300} // Set the width of the page (adjust as needed)
+                        width={300} 
                     />
                 ))}
             </Document>

@@ -8,10 +8,12 @@ function CustomMultiSelect() {
     const navigate = useNavigate();
     const [skills, setSkill] = useState([])
     const [hobbies, setHobbies] = useState([]);
+    const [subject, setSubject] = useState([]);
 
 
     const [selectedSkill, setSelectedSkill] = useState([]);
     const [selectedHobbies, setSelectedHobbies] = useState([]);
+    const [selectedSubject, setSelectedSubject] = useState([]);
 
 
     const handleChangeSkill = (selectedValues) => {
@@ -20,6 +22,9 @@ function CustomMultiSelect() {
 
     const handleChangeHobbies = (selectedValues) => {
         setSelectedHobbies(selectedValues);
+    };
+    const handleChangeSubject = (selectedValues) => {
+        setSelectedSubject(selectedValues);
     };
     useEffect(() => {
         fetch('https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/GetProfessionalSkillsResponse.json')
@@ -61,12 +66,31 @@ function CustomMultiSelect() {
             .catch((error) => {
                 console.error('There was a problem with the fetch operation:', error);
             });
+            fetch('https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/GetSubjectsResponse.json')
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                const subArray = data?.result[0].subjects;
+                const sub = subArray.map((hob) => ({
+                    value: hob.value,
+                    label: hob.value,
+                    id: hob._id
+                }));
+                setSubject(sub);
+            })
+            .catch((error) => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
     }, [selectedSkill, selectedHobbies])
     const handleSave = () => {
         const dataToSave = {
-
             selectedSkill: selectedSkill,
-            selectedHobbies: selectedHobbies
+            selectedHobbies: selectedHobbies,
+            selectedSubject:selectedSubject
         };
         const jsonString = JSON.stringify(dataToSave);
         localStorage.setItem('skill', jsonString);
@@ -113,13 +137,26 @@ function CustomMultiSelect() {
                             </Col>
                         </Row>
                         <Row className="d-flex justify-content-center align-items-center">
+                            <Col className="text-center">
+
+                                <h5>My favourite subject</h5>
+                                <Select
+                                    isMulti
+                                    options={subject}
+                                    value={selectedSubject}
+                                    onChange={handleChangeSubject}
+                                />
+
+                            </Col>
+                        </Row>
+                        <Row className="d-flex justify-content-center align-items-center">
                             <Col className="text-center align-items-end">
                                 <div className="custom-button" style={{ padding: '10px', position: 'absolute', bottom: '10px', left: '50%', transform: 'translateX(-50%)' }}>
                                     <Button
                                         onClick={handleSave}
                                         variant="danger"
                                         className="custom-button"
-                                        disabled={selectedSkill.length === 0 || selectedHobbies.length === 0}
+                                        disabled={selectedSkill.length === 0 || selectedHobbies.length === 0 ||selectedSubject.length===0}
 
                                     >
                                         Save
