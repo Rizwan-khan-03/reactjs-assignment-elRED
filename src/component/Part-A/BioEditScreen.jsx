@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { AiFillFile } from 'react-icons/ai';
-import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
@@ -62,83 +59,93 @@ function BioEditScreen() {
     return (
         <Container>
             <Row className="d-flex justify-content-center align-items-center">
-                <Col xs={12} sm={6} md={6} lg={6} className="text-center">
-                    <div className="d-flex">
-                        <span>Write something about your self</span>
-                    </div>
-                    <div className="d-flex">
-                        <InputGroup>
-                            <Form.Control
-                                as="textarea"
-                                aria-label="With textarea"
-                                placeholder='Write something here'
-                                value={text}
-                                onChange={handleChange}
-                            />
-                        </InputGroup>
-                    </div>
-                    <p style={{ textAlign: 'right' }}>{text.length}/{maxCharacters}</p>
-                </Col>
-            </Row>
 
-            <Row className="d-flex justify-content-center align-items-center">
-                <Col xs={12} sm={6} md={6} lg={6} className="text-center">
-                    <div className="d-flex justify-content-center">
-                        <label htmlFor="resumeUpload" className="custom-file-upload">
-                            <AiFillFile style={{ marginRight: '10px' }} /> Upload Resume
-                        </label>
-                        <input
-                            type="file"
-                            id="resumeUpload"
-                            className="form-control-file"
-                            accept=".pdf"
-                            onChange={handleFileChange}
-                        />
-                    </div>
-                    {selectedFile && (
-                        <div className="d-flex">
-                            <p>Selected file: {selectedFile.name}</p>
-                            <MdOutlineDeleteOutline style={{ color: 'red', border: 'none', cursor: 'pointer' }} onClick={handleDeleteFile} />
-                        </div>
-                    )}
-                </Col>
+                <Col xs={12} sm={6} md={6} lg={4} className="text-center">
+                    <Card className="p-4 shadow" style={{ maxWidth: '100%', height: '80vh', position: 'relative' }}>
+                        <Row className="d-flex justify-content-center align-items-center">
+                            <Col className="text-center">
+                                <div className="d-flex">
+                                    <span>Write something about your self</span>
+                                </div>
+                                <div className="d-flex">
+                                    <InputGroup>
+                                        <Form.Control
+                                            as="textarea"
+                                            aria-label="With textarea"
+                                            placeholder='Write something here'
+                                            value={text}
+                                            onChange={handleChange}
+                                        />
+                                    </InputGroup>
+                                </div>
+                                <p style={{ textAlign: 'right' }}>{text.length}/{maxCharacters}</p>
+                            </Col>
+                        </Row>
 
-            </Row>
-
-            <Row className="d-flex justify-content-center align-items-center">
-                <Col xs={12} sm={6} md={6} lg={6} className="text-center">
-                    <div className="d-flex">
-                        <span>Blood Group</span>
-                    </div>
-
-                    <div className={`custom-dropdown ${isOpen ? 'open' : ''}`}>
-                        <div className="dropdown-header" onClick={toggleDropdown}>
-                            <span className="selected-option">
-                                {selectedBloodGroup || 'Select Blood Group'}
-                            </span>
-                            <span className="arrow-icon">&#9660;</span>
-                        </div>
-                        <div className="dropdown-options">
-                            {
-                                ['A+ (Positive)', ' A- (Negative)', ' B+ (Positive)'].map((group) => (
-                                    <div key={group + 1} className="option" onClick={() => handleSelect(group)}>
-                                        {group}
+                        <Row className="d-flex justify-content-center align-items-center">
+                            <Col className="text-center">
+                                <div className="d-flex justify-content-center">
+                                    <label htmlFor="resumeUpload" className="custom-file-upload">
+                                        <AiFillFile style={{ marginRight: '10px' }} /> Upload Resume
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="resumeUpload"
+                                        className="form-control-file"
+                                        accept=".pdf"
+                                        onChange={handleFileChange}
+                                    />
+                                </div>
+                                {selectedFile && (
+                                    <div className="d-flex">
+                                        <p>Selected file: {selectedFile.name}</p>
+                                        <MdOutlineDeleteOutline style={{ color: 'red', border: 'none', cursor: 'pointer' }} onClick={handleDeleteFile} />
                                     </div>
-                                ))
-                            }
+                                )}
+                            </Col>
 
-                        </div>
-                    </div>
+                        </Row>
 
+                        <Row className="d-flex justify-content-center align-items-center">
+                            <Col className="text-center">
+                                <div className="d-flex">
+                                    <span>Blood Group</span>
+                                </div>
+
+                                <div className={`custom-dropdown ${isOpen ? 'open' : ''}`}>
+                                    <div className="dropdown-header" onClick={toggleDropdown}>
+                                        <span className="selected-option">
+                                            {selectedBloodGroup || 'Select Blood Group'}
+                                        </span>
+                                        <span className="arrow-icon">&#9660;</span>
+                                    </div>
+                                    <div className="dropdown-options">
+                                        {
+                                            ['A+ (Positive)', ' A- (Negative)', ' B+ (Positive)'].map((group) => (
+                                                <div key={group + 1} className="option" onClick={() => handleSelect(group)}>
+                                                    {group}
+                                                </div>
+                                            ))
+                                        }
+
+                                    </div>
+                                </div>
+
+                            </Col>
+                        </Row>
+                        <Row className="d-flex justify-content-center align-items-center">
+                            <Col className="text-center align-items-end">
+                                <div className="custom-button" style={{ padding: '10px', position: 'absolute', bottom: '10px', left: '50%', transform: 'translateX(-50%)' }}>
+                                    <Button onClick={handleSave} variant="danger" className="custom-button" disabled={!selectedBloodGroup || !text || !selectedFile}>
+                                        Save
+                                    </Button>
+                                </div>
+                            </Col>
+                        </Row>
+                    </Card>
                 </Col>
             </Row>
-            <Row className="d-flex justify-content-center align-items-center">
-                <Col xs={12} sm={6} md={6} lg={6} className="text-center align-items-end">
-                    <Button onClick={handleSave} variant="danger" className="custom-button" disabled={!selectedBloodGroup || !text || !selectedFile}>
-                        Save
-                    </Button>
-                </Col>
-            </Row>
+
 
         </Container>
 

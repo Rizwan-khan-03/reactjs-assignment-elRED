@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { MdModeEditOutline } from 'react-icons/md';
 import { IoChevronForwardSharp } from 'react-icons/io5';
 import logo from './images/upload-logo.jpg'
@@ -35,7 +33,10 @@ function BioScreen() {
     return (
         <Container>
             <Row className="d-flex justify-content-center align-items-center">
-                <Col xs={12} sm={6} md={6} lg={6} className="text-center align-items-end">
+                <Col xs={12} sm={6} md={6} lg={4} className="text-center align-items-end">
+                    <Card className="p-4 shadow" style={{ maxWidth: '100%', height: '80vh', position: 'relative' }}>
+                    <Row className="d-flex justify-content-center align-items-center">
+                <Col  className="text-center align-items-end">
                     <div className="d-flex">
                         <span>About me</span>
                         <Link to='/bioedit'><MdModeEditOutline /></Link>
@@ -49,7 +50,7 @@ function BioScreen() {
             </Row>
 
             <Row className="d-flex justify-content-center align-items-center">
-                <Col xs={12} sm={6} md={6} lg={6} className="text-center align-items-end">
+                <Col  className="text-center align-items-end">
                     <div className="d-flex">
                         <span>Blood Group</span>
                         {selectedBloodGroup ? <p>{selectedBloodGroup}</p> : <p>No group</p>}
@@ -57,7 +58,7 @@ function BioScreen() {
                 </Col>
             </Row>
             <Row className="d-flex justify-content-center align-items-center">
-                <Col xs={12} sm={6} md={6} lg={6} className="text-center align-items-end">
+                <Col  className="text-center align-items-end">
                     <div className="custom-container">
                         <div className="custom-content">
                             <div className="custom-left">
@@ -72,7 +73,7 @@ function BioScreen() {
                 </Col>
             </Row>
             <Row className="d-flex justify-content-center align-items-center">
-                <Col xs={12} sm={6} md={6} lg={6} className="text-center align-items-end">
+                <Col  className="text-center align-items-end">
                     <div className="d-flex">
                         <span>Skills</span>
                         <Link to='/skills'><MdModeEditOutline /></Link>
@@ -87,18 +88,21 @@ function BioScreen() {
                 </Col>
             </Row>
             <Row className="d-flex justify-content-center align-items-center">
-                <Col xs={12} sm={6} md={6} lg={6} className="text-center align-items-end">
+                <Col  className="text-center align-items-end">
                     <div className="d-flex">
                         <span>Hobbies</span>
                         <Link to='/skills'><MdModeEditOutline /></Link>
                     </div>
                     {hobbies ? (
-                        hobbies?.map((hobbies ) => (
+                        hobbies?.map((hobbies) => (
                             <span>{hobbies?.label}</span>
                         ))
                     ) : (<p>No hobbies  added yet</p>)
                     }
 
+                </Col>
+            </Row>
+                    </Card>
                 </Col>
             </Row>
         </Container>
