@@ -8,6 +8,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { AiFillFile } from 'react-icons/ai';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
+
 function BioEditScreen() {
     const navigate = useNavigate();
     const [text, setText] = useState('');
@@ -19,7 +21,7 @@ function BioEditScreen() {
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
-   
+
 
     const handleSelect = (eventKey) => {
         setSelectedBloodGroup(eventKey);
@@ -46,14 +48,17 @@ function BioEditScreen() {
     };
     const handleSave = () => {
         const dataToSave = {
-          text: text,
-          selectedBloodGroup: selectedBloodGroup,
-          selectedFile: selectedFile
+            text: text,
+            selectedBloodGroup: selectedBloodGroup,
+            selectedFile: selectedFile
         };
         const jsonString = JSON.stringify(dataToSave);
         localStorage.setItem('biodetails', jsonString);
         navigate('/');
-      };
+    };
+    const handleDeleteFile = () => {
+        setSelectedFile(null);
+    };
     return (
         <Container>
             <Row className="d-flex justify-content-center align-items-center">
@@ -91,8 +96,9 @@ function BioEditScreen() {
                         />
                     </div>
                     {selectedFile && (
-                        <div>
+                        <div className="d-flex">
                             <p>Selected file: {selectedFile.name}</p>
+                            <MdOutlineDeleteOutline style={{ color: 'red', border: 'none', cursor: 'pointer' }} onClick={handleDeleteFile} />
                         </div>
                     )}
                 </Col>
