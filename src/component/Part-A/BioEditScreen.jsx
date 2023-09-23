@@ -6,7 +6,8 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { AiFillFile } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
-
+import { IoChevronForwardSharp } from 'react-icons/io5';
+import { IoIosArrowBack } from 'react-icons/io';
 function BioEditScreen() {
     const navigate = useNavigate();
     const [text, setText] = useState('');
@@ -59,9 +60,16 @@ function BioEditScreen() {
     return (
         <Container>
             <Row className="d-flex justify-content-center align-items-center">
+                <Col xs={12} sm={12} md={6} lg={4} className="text-center">
+                    <Card className="p-4 shadow" style={{ maxWidth: '100%', height: '90vh', position: 'relative' }}>
+                        <Row className="d-flex justify-content-start align-items-start">
+                            <Col className="text-start">
+                                <div >
+                                    <Link to="/" style={{textDecoration:'none',color:'black'}}><IoIosArrowBack />My Bio</Link>{' '}
+                                </div>
+                            </Col>
 
-                <Col xs={12} sm={6} md={6} lg={4} className="text-center">
-                    <Card className="p-4 shadow" style={{ maxWidth: '100%', height: '80vh', position: 'relative' }}>
+                        </Row>
                         <Row className="d-flex justify-content-center align-items-center">
                             <Col className="text-center">
                                 <div className="d-flex">

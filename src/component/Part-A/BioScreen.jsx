@@ -34,8 +34,8 @@ function BioScreen() {
         <>
             <Container>
                 <Row className="d-flex justify-content-center align-items-center">
-                    <Col xs={12} sm={6} md={6} lg={4} className="text-center align-items-end">
-                        <Card className="p-4 shadow" style={{ maxWidth: '100%', height: '80vh', position: 'relative' }}>
+                    <Col xs={12} sm={12} md={6} lg={4} className="text-center align-items-end">
+                        <Card className="p-4 shadow" style={{ maxWidth: '100%', height: '90vh', position: 'relative' }}>
                             <Row className="d-flex justify-content-center align-items-center">
                                 <Col className="text-center align-items-end">
                                     <div className="d-flex">

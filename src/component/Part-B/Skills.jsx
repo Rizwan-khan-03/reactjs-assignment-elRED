@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
-
+import { IoIosArrowBack } from 'react-icons/io';
 function CustomMultiSelect() {
     const navigate = useNavigate();
     const [skills, setSkill] = useState([])
@@ -77,11 +77,18 @@ function CustomMultiSelect() {
     return (
         <Container>
             <Row className="d-flex justify-content-center align-items-center">
-                <Col xs={12} sm={6} md={6} lg={4} className="text-center">
-                    <Card className="p-4 shadow" style={{ maxWidth: '100%', height: '80vh', position: 'relative' }}>
+                <Col xs={12} sm={12} md={6} lg={4} className="text-center">
+                    <Card className="p-4 shadow" style={{ maxWidth: '100%', height: '90vh', position: 'relative' }}>
+                        <Row className="d-flex justify-content-start align-items-start">
+                            <Col className="text-start">
+                                <div >
+                                    <Link to="/" style={{ textDecoration: 'none', color: 'black' }}><IoIosArrowBack />My Bio</Link>{' '}
+                                </div>
+                            </Col>
+
+                        </Row>
                         <Row className="d-flex justify-content-center align-items-center">
                             <Col className="text-center">
-
                                 <h5>I am incredible at these skills / professionally great</h5>
                                 <Select
                                     isMulti
@@ -107,8 +114,7 @@ function CustomMultiSelect() {
                         </Row>
                         <Row className="d-flex justify-content-center align-items-center">
                             <Col className="text-center align-items-end">
-                               
-                                <div className="custom-button" style={{padding:'10px', position: 'absolute', bottom: '10px', left: '50%', transform: 'translateX(-50%)' }}>
+                                <div className="custom-button" style={{ padding: '10px', position: 'absolute', bottom: '10px', left: '50%', transform: 'translateX(-50%)' }}>
                                     <Button
                                         onClick={handleSave}
                                         variant="danger"
@@ -125,7 +131,6 @@ function CustomMultiSelect() {
 
                 </Col>
             </Row>
-
         </Container>
     );
 }
