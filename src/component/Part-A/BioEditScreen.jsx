@@ -61,6 +61,7 @@ function BioEditScreen() {
     };
     const handleDeleteFile = () => {
         setSelectedFile(null);
+        setSelectedFileName(null)
     };
     return (
         <>
