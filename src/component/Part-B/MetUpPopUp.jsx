@@ -1,7 +1,7 @@
 import React  from 'react';
 import { Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-function MetUpPopUp({showModal,setShowModal,meetUp}) {
+function MetUpPopUp({showModal,setShowModal,meetUp,isDataFecthed}) {
     const handleClose = () => setShowModal(false);
  
     return (
