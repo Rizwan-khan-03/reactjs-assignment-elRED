@@ -12,6 +12,7 @@ function MetUpPopUp({showModal,setShowModal,meetUp}) {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="user-content">
+                    {isDataFecthed && <p> Loading...</p>}
                         {meetUp?.map((meet, index) => (
                             <div key={index} className="user-item d-flex  justify-content-start align-items-center">
                                 <img

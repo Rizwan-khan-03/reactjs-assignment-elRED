@@ -19,7 +19,7 @@ function BioScreen() {
     const [showModalCode, setShowModalCode] = useState(false);
     const [meetUp, setMeetUp] = useState([]);
     const [codeEthical, setCodeEthical] = useState([]);
-
+    const [isDataFecthed, setIsDataFecthed] = useState(false);
     useEffect(() => {
         fetchData()
     }, [])
@@ -43,10 +43,12 @@ function BioScreen() {
     }, [storedData, storedskillData])
     async function fetchData() {
         try {
+            setIsDataFecthed(true)
             const meetUpData = await fetchMeetUpData();
             const ethicalCode = await fetchEthicalCodeData();
             setMeetUp(meetUpData)
             setCodeEthical(ethicalCode)
+            setIsDataFecthed(false)
         } catch (error) {
             console.error('An error occurred:', error);
         }
@@ -55,8 +57,18 @@ function BioScreen() {
     const handleShowCode = () => setShowModalCode(true);
     return (
         <>
-            {showModal && <MetUpPopUp setShowModal={setShowModal} showModal={showModal} meetUp={meetUp} />}
-            {showModalCode && <EthicalCoderPopUp setShowModal={setShowModalCode} showModal={showModalCode} codeEthical={codeEthical} />}
+            {showModal &&
+                <MetUpPopUp
+                    setShowModal={setShowModal}
+                    showModal={showModal}
+                    meetUp={meetUp}
+                    isDataFecthed={isDataFecthed} />}
+            {showModalCode &&
+                <EthicalCoderPopUp
+                    setShowModal={setShowModalCode}
+                    showModal={showModalCode}
+                    codeEthical={codeEthical}
+                    isDataFecthed={isDataFecthed} />}
             <Container>
                 <Row className="d-flex justify-content-center align-items-center">
                     <Col xs={12} sm={12} md={6} lg={4} className="text-center align-items-end">

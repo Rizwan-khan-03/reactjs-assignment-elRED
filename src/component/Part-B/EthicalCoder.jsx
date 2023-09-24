@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-function EthicalCoderPopUp({showModal,setShowModal,codeEthical}) {
+function EthicalCoderPopUp({showModal,setShowModal,codeEthical, isDataFecthed}) {
     const handleClose = () => setShowModal(false);
  
     return (
@@ -12,6 +12,7 @@ function EthicalCoderPopUp({showModal,setShowModal,codeEthical}) {
                 </Modal.Header>
                 <Modal.Body>
                     <div className="user-content">
+                    {isDataFecthed && <p> Loading...</p>}
                         {codeEthical?.map((meet, index) => (
                             <div key={index} className="user-item d-flex  justify-content-start align-items-center">
                                 <img

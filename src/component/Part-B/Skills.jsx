@@ -13,7 +13,7 @@ function CustomMultiSelect() {
     const [selectedSkill, setSelectedSkill] = useState([]);
     const [selectedHobbies, setSelectedHobbies] = useState([]);
     const [selectedSubject, setSelectedSubject] = useState([]);
-
+    const [isDataFecthed, setIsDataFecthed] = useState(false);
 
     const handleChangeSkill = (selectedValues) => {
         setSelectedSkill(selectedValues);
@@ -30,13 +30,16 @@ function CustomMultiSelect() {
     }, [selectedSkill, selectedHobbies])
     async function fetchData() {
         try {
+            setIsDataFecthed(true)
             const skillsData = await fetchProfessionalSkills();
             const hobbiesData = await fetchHobbies();
             const subjectData = await fetchSubjects();
             setSkill(skillsData);
             setHobbies(hobbiesData)
             setSubject(subjectData);
+            setIsDataFecthed(false)
         } catch (error) {
+            setIsDataFecthed(false)
             console.error('An error occurred:', error);
         }
     }
@@ -67,6 +70,7 @@ function CustomMultiSelect() {
                         </Row>
                         <Row className="d-flex justify-content-center align-items-center">
                             <Col className="text-center">
+                                {isDataFecthed && <p>Skills Loading...</p>}
                                 <h5>I am incredible at these skills / professionally great</h5>
                                 <Select
                                     isMulti
@@ -79,7 +83,7 @@ function CustomMultiSelect() {
                         </Row>
                         <Row className="d-flex justify-content-center align-items-center">
                             <Col className="text-center">
-
+                            {isDataFecthed && <p>Hobbies Loading...</p>}
                                 <h5>I am passionate about</h5>
                                 <Select
                                     isMulti
@@ -92,7 +96,7 @@ function CustomMultiSelect() {
                         </Row>
                         <Row className="d-flex justify-content-center align-items-center">
                             <Col className="text-center">
-
+                            {isDataFecthed && <p>Subject Loading...</p>}
                                 <h5>My favourite subject</h5>
                                 <Select
                                     isMulti
