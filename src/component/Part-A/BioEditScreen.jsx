@@ -6,9 +6,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import { AiFillFile } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
-import { IoChevronForwardSharp } from 'react-icons/io5';
 import { IoIosArrowBack } from 'react-icons/io';
-import Resume from '../Part-C/Resume';
 function BioEditScreen() {
     const navigate = useNavigate();
     const [text, setText] = useState('');
@@ -16,6 +14,7 @@ function BioEditScreen() {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedBloodGroup, setSelectedBloodGroup] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
+    const [selectedFileName, setSelectedFileName] = useState(null);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
@@ -36,7 +35,14 @@ function BioEditScreen() {
         const file = e.target.files[0];
         if (file) {
             if (file.type === 'application/pdf' && file.size <= 5 * 1024 * 1024) {
-                setSelectedFile(file);
+                setSelectedFileName(file?.name)
+                const reader = new FileReader();
+                reader.onload = function () {
+                    const fileData = reader.result;
+                    localStorage.setItem('savedFile', fileData);
+                    setSelectedFile(fileData);
+                };
+                reader.readAsDataURL(file);
             } else {
                 setSelectedFile(null);
                 alert('Please select a valid PDF file with a maximum size of 5 MB.');
@@ -58,19 +64,16 @@ function BioEditScreen() {
     };
     return (
         <>
-
             <Container>
                 <Row className="d-flex justify-content-center align-items-center">
-
                     <Col xs={12} sm={12} md={6} lg={4} className="text-center">
-                        <Card className="p-4 shadow" style={{ maxWidth: '100%', height: '90vh', position: 'relative' }}>
+                        <Card className="p-4 shadow" style={{ maxWidth: '100%', height: '100vh', position: 'relative' }}>
                             <Row className="d-flex justify-content-start align-items-start">
                                 <Col className="text-start">
                                     <div >
                                         <Link to="/" style={{ textDecoration: 'none', color: 'black' }}><IoIosArrowBack />My Bio</Link>{' '}
-                                    </div>
+                                    </div>  
                                 </Col>
-
                             </Row>
                             <Row className="d-flex justify-content-center align-items-center">
                                 <Col className="text-center">
@@ -91,11 +94,16 @@ function BioEditScreen() {
                                     <p style={{ textAlign: 'right' }}>{text.length}/{maxCharacters}</p>
                                 </Col>
                             </Row>
+                            {
+                                selectedFile && <Row className="d-flex justify-content-center align-items-center">
+                                    <Col className="text-center">
+                                        <iframe src={selectedFile} ></iframe>
+                                    </Col>
+                                </Row>
+                            }
 
                             <Row className="d-flex justify-content-center align-items-center">
                                 <Col className="text-center">
-                                    {selectedFile && <Resume pdfUrl={selectedFile}/>
-                                    }
                                     <div className="d-flex justify-content-center">
                                         <label htmlFor="resumeUpload" className="custom-file-upload">
                                             <AiFillFile style={{ marginRight: '10px' }} /> Upload Resume
@@ -108,14 +116,13 @@ function BioEditScreen() {
                                             onChange={handleFileChange}
                                         />
                                     </div>
-                                    {selectedFile && (
+                                    {selectedFileName && (
                                         <div className="d-flex">
-                                            <p>Selected file: {selectedFile.name}</p>
+                                            <p>Selected file: {selectedFileName}</p>
                                             <MdOutlineDeleteOutline style={{ color: 'red', border: 'none', cursor: 'pointer' }} onClick={handleDeleteFile} />
                                         </div>
                                     )}
                                 </Col>
-
                             </Row>
 
                             <Row className="d-flex justify-content-center align-items-center">

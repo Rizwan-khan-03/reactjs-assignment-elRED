@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React  from 'react';
+import { Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import logo from '../Part-A/images/upload-logo.jpg'
 function MetUpPopUp({showModal,setShowModal,meetUp}) {
     const handleClose = () => setShowModal(false);
  

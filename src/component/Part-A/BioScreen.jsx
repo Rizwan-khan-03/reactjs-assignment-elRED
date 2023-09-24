@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import { MdModeEditOutline } from 'react-icons/md';
 import { IoChevronForwardSharp } from 'react-icons/io5';
 import logo from './images/upload-logo.jpg'
 import MetUpPopUp from '../Part-B/MetUpPopUp';
 import EthicalCoderPopUp from '../Part-B/EthicalCoder';
+import { useNavigate } from 'react-router-dom';
 function BioScreen() {
+    const navigate = useNavigate();
     const storedData = localStorage.getItem('biodetails');
     const storedskillData = localStorage.getItem('skill');
     const [text, setText] = useState('');
@@ -19,6 +21,8 @@ function BioScreen() {
     const [showModalCode, setShowModalCode] = useState(false);
     const [meetUp, setMeetUp] = useState([]);
     const [codeEthical, setCodeEthical] = useState([]);
+    const [url, setUrl] = useState('');
+    const  savedFileBase64 = localStorage.getItem('savedFile');
     useEffect(() => {
         if (storedData) {
             const parsedData = JSON.parse(storedData);
@@ -47,7 +51,6 @@ function BioScreen() {
                 return response.json();
             })
             .then((data) => {
-                console.log('meetUp', data);
                 setMeetUp(data?.result);
             })
             .catch((error) => {
@@ -61,7 +64,6 @@ function BioScreen() {
                 return response.json();
             })
             .then((data) => {
-                console.log('setCodeEthical', data);
                 setCodeEthical(data?.result);
             })
             .catch((error) => {
@@ -70,6 +72,16 @@ function BioScreen() {
     }, [])
     const handleShowMeet = () => setShowModal(true);
     const handleShowCode = () => setShowModalCode(true);
+    function displayBase64PDF(base64Data) {
+        var iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.src = base64Data;
+        navigate('/resumescreen')
+        // var newWindow = window.open('', '_blank');
+        // newWindow.document.body.appendChild(iframe);
+        {/* <Link to="/resumescreen"><IoChevronForwardSharp /></Link> */}
+    }
     return (
         <>
             {showModal && <MetUpPopUp setShowModal={setShowModal} showModal={showModal} meetUp={meetUp} />}
@@ -109,7 +121,8 @@ function BioScreen() {
                                                 <span>Resume</span>
                                             </div>
                                             <div className="custom-right">
-                                                <Link to="/resumescreen"><IoChevronForwardSharp /></Link>
+                                                {/* <IoChevronForwardSharp onClick={()=>displayBase64PDF(savedFileBase64)} /> */}
+                                                <Link to="/resumescreen"><IoChevronForwardSharp /></Link> 
                                             </div>
                                         </div>
                                     </div>
@@ -168,7 +181,7 @@ function BioScreen() {
                                                 key={sub?._id}
                                                 className="custom-button-span"
                                             >
-                                                {sub?.label}  
+                                                {sub?.label}
                                             </span>
                                         ))
                                     ) : (
@@ -181,14 +194,14 @@ function BioScreen() {
                                 <Col className="text-center align-items-end">
                                     <div >
                                         <h5 className="text-start">Rating</h5>
-                                        <div  className='d-flex justify-content-space-between'>
+                                        <div className='d-flex justify-content-space-between'>
                                             <p onClick={handleShowMeet} className='modal-open'>  {meetUp?.length}</p>
                                             <p>  meet in real life/video call</p>
                                         </div>
                                         <div style={{ height: '1px', background: 'gray' }}></div>
 
-                                        <div  className='d-flex justify-content-space-between'>
-                                           <p onClick={handleShowCode} className='modal-open'> {codeEthical?.length}</p>
+                                        <div className='d-flex justify-content-space-between'>
+                                            <p onClick={handleShowCode} className='modal-open'> {codeEthical?.length}</p>
                                             <p>Say has ethical code of conduct and safe to do business with</p>
                                         </div>
                                     </div>
