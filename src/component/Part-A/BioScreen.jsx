@@ -92,7 +92,6 @@ function BioScreen() {
                                                 <span>Resume</span>
                                             </div>
                                             <div className="custom-right">
-                                                {/* <IoChevronForwardSharp onClick={()=>displayBase64PDF(savedFileBase64)} /> */}
                                                 <Link to="/resumescreen"><IoChevronForwardSharp /></Link>
                                             </div>
                                         </div>

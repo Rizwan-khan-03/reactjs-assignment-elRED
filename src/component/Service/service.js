@@ -1,3 +1,4 @@
+// meet up api
 export async function fetchMeetUpData() {
     try {
         const response = await fetch('https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/RatingsVirtuallyMetResponse.json');
@@ -13,6 +14,8 @@ export async function fetchMeetUpData() {
         throw error;
     }
 }
+
+// code api
 export async function fetchEthicalCodeData() {
     try {
         const response = await fetch('https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/RatingsEthicalCodeResponse.json');
@@ -27,6 +30,8 @@ export async function fetchEthicalCodeData() {
         throw error;
     }
 }
+
+// skill api
 export async function fetchProfessionalSkills() {
     try {
         const response = await fetch('https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/GetProfessionalSkillsResponse.json');
@@ -50,6 +55,7 @@ export async function fetchProfessionalSkills() {
     }
 }
 
+// hobbies api
 export async function fetchHobbies() {
     try {
         const response = await fetch('https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/GetHobbiesResponse.json');
@@ -72,7 +78,7 @@ export async function fetchHobbies() {
         throw error; 
     }
 }
-
+// subject api
 export async function fetchSubjects() {
     try {
         const response = await fetch('https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/GetSubjectsResponse.json');
@@ -80,7 +86,6 @@ export async function fetchSubjects() {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        
         const data = await response.json();
         const subArray = data?.result[0].subjects;
         const sub = subArray.map((subject) => ({
