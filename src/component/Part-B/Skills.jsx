@@ -4,13 +4,12 @@ import { Container, Row, Col, Card, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { IoIosArrowBack } from 'react-icons/io';
+import { fetchHobbies, fetchProfessionalSkills, fetchSubjects } from '../Service/service';
 function CustomMultiSelect() {
     const navigate = useNavigate();
     const [skills, setSkill] = useState([])
     const [hobbies, setHobbies] = useState([]);
     const [subject, setSubject] = useState([]);
-
-
     const [selectedSkill, setSelectedSkill] = useState([]);
     const [selectedHobbies, setSelectedHobbies] = useState([]);
     const [selectedSubject, setSelectedSubject] = useState([]);
@@ -27,70 +26,25 @@ function CustomMultiSelect() {
         setSelectedSubject(selectedValues);
     };
     useEffect(() => {
-        fetch('https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/GetProfessionalSkillsResponse.json')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                const skillsArray = data?.result[0].skills;
-                const skillres = skillsArray.map((skil) => ({
-                    value: skil.value,
-                    label: skil.value,
-                    id: skil._id
-                }));
-                setSkill(skillres);
-            })
-            .catch((error) => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-
-        fetch('https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/GetHobbiesResponse.json')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                const hobbyArray = data?.result[0].hobbies;
-                const hobres = hobbyArray.map((hob) => ({
-                    value: hob.value,
-                    label: hob.value,
-                    id: hob._id
-                }));
-                setHobbies(hobres);
-            })
-            .catch((error) => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-            fetch('https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/GetSubjectsResponse.json')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                const subArray = data?.result[0].subjects;
-                const sub = subArray.map((hob) => ({
-                    value: hob.value,
-                    label: hob.value,
-                    id: hob._id
-                }));
-                setSubject(sub);
-            })
-            .catch((error) => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
+        fetchData()
     }, [selectedSkill, selectedHobbies])
+    async function fetchData() {
+        try {
+            const skillsData = await fetchProfessionalSkills();
+            const hobbiesData = await fetchHobbies();
+            const subjectData = await fetchSubjects();
+            setSkill(skillsData);
+            setHobbies(hobbiesData)
+            setSubject(subjectData);
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    }
     const handleSave = () => {
         const dataToSave = {
             selectedSkill: selectedSkill,
             selectedHobbies: selectedHobbies,
-            selectedSubject:selectedSubject
+            selectedSubject: selectedSubject
         };
         const jsonString = JSON.stringify(dataToSave);
         localStorage.setItem('skill', jsonString);
@@ -156,7 +110,7 @@ function CustomMultiSelect() {
                                         onClick={handleSave}
                                         variant="danger"
                                         className="custom-button"
-                                        disabled={selectedSkill.length === 0 || selectedHobbies.length === 0 ||selectedSubject.length===0}
+                                        disabled={selectedSkill.length === 0 || selectedHobbies.length === 0 || selectedSubject.length === 0}
 
                                     >
                                         Save

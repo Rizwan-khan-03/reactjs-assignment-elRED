@@ -97,7 +97,7 @@ function BioEditScreen() {
                             {
                                 selectedFile && <Row className="d-flex justify-content-center align-items-center">
                                     <Col className="text-center">
-                                        <iframe src={selectedFile} ></iframe>
+                                        <iframe src={selectedFile} title='pdf file display'></iframe>
                                     </Col>
                                 </Row>
                             }

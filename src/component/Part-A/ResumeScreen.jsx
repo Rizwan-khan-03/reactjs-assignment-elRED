@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import { IoIosArrowBack } from 'react-icons/io';
 function ResumeScreen() {
     const savedFileBase64 = localStorage.getItem('savedFile');
@@ -20,7 +20,7 @@ function ResumeScreen() {
                             </Row>
                             <Row className="d-flex justify-content-start align-items-start">
                                 <Col className="text-center">
-                                <iframe src={savedFileBase64}  style={{ maxWidth: '100%', height: '80vh', }}></iframe>
+                                <iframe src={savedFileBase64} title='pdf file display' style={{ maxWidth: '100%', height: '80vh', }}></iframe>
                                 </Col>
                             </Row>
                         </Card>

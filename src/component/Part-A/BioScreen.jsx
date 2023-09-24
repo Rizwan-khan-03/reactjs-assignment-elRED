@@ -6,14 +6,12 @@ import { IoChevronForwardSharp } from 'react-icons/io5';
 import logo from './images/upload-logo.jpg'
 import MetUpPopUp from '../Part-B/MetUpPopUp';
 import EthicalCoderPopUp from '../Part-B/EthicalCoder';
-import { useNavigate } from 'react-router-dom';
+import { fetchEthicalCodeData, fetchMeetUpData } from '../Service/service';
 function BioScreen() {
-    const navigate = useNavigate();
     const storedData = localStorage.getItem('biodetails');
     const storedskillData = localStorage.getItem('skill');
     const [text, setText] = useState('');
     const [selectedBloodGroup, setSelectedBloodGroup] = useState('');
-    const [selectedFile, setSelectedFile] = useState(null);
     const [skills, setSkill] = useState([])
     const [hobbies, setHobbies] = useState([]);
     const [subject, setSubject] = useState([]);
@@ -21,15 +19,16 @@ function BioScreen() {
     const [showModalCode, setShowModalCode] = useState(false);
     const [meetUp, setMeetUp] = useState([]);
     const [codeEthical, setCodeEthical] = useState([]);
-    const [url, setUrl] = useState('');
-    const  savedFileBase64 = localStorage.getItem('savedFile');
+
+    useEffect(() => {
+        fetchData()
+    }, [])
     useEffect(() => {
         if (storedData) {
             const parsedData = JSON.parse(storedData);
             if (storedData) {
                 setText(parsedData.text || '');
                 setSelectedBloodGroup(parsedData.selectedBloodGroup || '');
-                setSelectedFile(parsedData.selectedFile || null);
             }
         }
         if (storedskillData) {
@@ -42,46 +41,18 @@ function BioScreen() {
         }
 
     }, [storedData, storedskillData])
-    useEffect(() => {
-        fetch('https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/RatingsVirtuallyMetResponse.json')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setMeetUp(data?.result);
-            })
-            .catch((error) => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-        fetch('https://newpublicbucket.s3.us-east-2.amazonaws.com/reactLiveAssignment/JsonFiles/RatingsEthicalCodeResponse.json')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                setCodeEthical(data?.result);
-            })
-            .catch((error) => {
-                console.error('There was a problem with the fetch operation:', error);
-            });
-    }, [])
+    async function fetchData() {
+        try {
+            const meetUpData = await fetchMeetUpData();
+            const ethicalCode = await fetchEthicalCodeData();
+            setMeetUp(meetUpData)
+            setCodeEthical(ethicalCode)
+        } catch (error) {
+            console.error('An error occurred:', error);
+        }
+    }
     const handleShowMeet = () => setShowModal(true);
     const handleShowCode = () => setShowModalCode(true);
-    function displayBase64PDF(base64Data) {
-        var iframe = document.createElement('iframe');
-        iframe.style.width = '100%';
-        iframe.style.height = '100%';
-        iframe.src = base64Data;
-        navigate('/resumescreen')
-        // var newWindow = window.open('', '_blank');
-        // newWindow.document.body.appendChild(iframe);
-        {/* <Link to="/resumescreen"><IoChevronForwardSharp /></Link> */}
-    }
     return (
         <>
             {showModal && <MetUpPopUp setShowModal={setShowModal} showModal={showModal} meetUp={meetUp} />}
@@ -122,7 +93,7 @@ function BioScreen() {
                                             </div>
                                             <div className="custom-right">
                                                 {/* <IoChevronForwardSharp onClick={()=>displayBase64PDF(savedFileBase64)} /> */}
-                                                <Link to="/resumescreen"><IoChevronForwardSharp /></Link> 
+                                                <Link to="/resumescreen"><IoChevronForwardSharp /></Link>
                                             </div>
                                         </div>
                                     </div>
